@@ -69,8 +69,8 @@ Hence, for our example, this file can be interpretated as:
 0 to 1   - 1st travel to location 1, r2_0loc0_1
 1 to 3   - 2nd do task t2
 3 to 7   - 3rd travel to location 2, r2_0loc1_2
-2 to 4   - 4rd do task t2
-there is no 4, so we are done.
+7 to 8   - 4rd do task t22
+there is no 8, so we are done.
 ```
 
 From this simple exercise we learned that:

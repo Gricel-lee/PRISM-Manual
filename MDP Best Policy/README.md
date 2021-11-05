@@ -51,9 +51,8 @@ The following cmd command gives us this information:
 prism robot2.pm -pctl "Rmin=?[F done]" -exportadv best-policy -exportstates states
 ```
 
-It generates two files: "best-policy" and "states" files. For now, we are interested in the best-policy[^1]. The first column shows the number of states and transitions[^2].
-From the second row, the first column represents the current state, the second column the next state, an the forth column the action taken:
-
+It generates two files: "best-policy" and "states" files. For now, we are interested in the best-policy. The first column shows the number of states and transitions[^2].
+From the second row, it shows the sequence of actions[^1] to "Rmin=?[F done]". The first column is the current row; the second, the next row (destination); the third the probability of the transition; and the last column the action label:
 ```java
 9 7
 0 1 1 r2_0loc0_1
@@ -65,13 +64,26 @@ From the second row, the first column represents the current state, the second c
 7 8 1 t22
 ```
 
+Hence, for our example, this file can be interpretated as the following sequence of states:
+```java
+0 to 1 - 1st travel to location 1, r2_0loc0_1
+1 to 3 - 2nd do task t2
+3 to 7 - 3rd travel to location 2, r2_0loc1_2
+2 to 4 - 4rd do task t2
+there is no 4, so we are done.
+```
+
+From this simple exercise we learned that:
+- the information on what is happening is given by the action labels (e.g., we know that "t2" means robot r2 is doing t2)
+- it may contain parts of the state space that are not actually reachable under that strategy (e.g., rows 5 and 6 are never reached)
+- once we reach a non-existent state, we are done!
 
 
-[^1]: The "best-policy" file contains the Markov chain induced by the optimal policy, i.e., the series of deterministic actions that convert the MDP to a DTMC.
+[^1]: It contains the Markov chain induced by the optimal policy, i.e., the series of deterministic actions that convert the MDP to a DTMC.
 [^2]: https://www.prismmodelchecker.org/manual/Appendices/ExplicitModelFiles#tra. Notice that for some models this may not concide to the number of states and transitions shown when build the PRISM model in the graphical interface. This is because: 
 "Since we are checking a (cosafe) LTL property, the model checking
 process is based on the construction and analysis of a product of the
 original model and an automaton. The .tra file you are seeing is a
 fragment of that product, not the original model. Hence the mismatch in
 indexing. There are actually switches -exportprodtrans and
--exportprodstates with export info about the product model, if that helps." D.P.
+-exportprodstates with export info about the product model, if that helps." Exchange with D.Parker

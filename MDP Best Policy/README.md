@@ -51,8 +51,8 @@ The following cmd command gives us this information:
 prism robot2.pm -pctl "Rmin=?[F done]" -exportadv best-policy -exportstates states
 ```
 
-It generates two files: "best-policy" and "states" files. For now, we are interested in the best-policy. The first column shows the number of states and transitions[^2].
-From the second row, it shows the sequence of actions[^1] to "Rmin=?[F done]". The first column is the current row; the second, the next row (destination); the third the probability of the transition; and the last column the action label:
+It generates two files: "best-policy" and "states" files. For now, we are interested in the best-policy[^1]. The first column shows the number of states and transitions.
+From the second row, it shows the sequence of actions[^2] to "Rmin=?[F done]". The first column is the current row; the second, the next row (destination); the third the probability of the transition; and the last column the action label:
 ```java
 9 7
 0 1 1 r2_0loc0_1

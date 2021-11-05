@@ -1,4 +1,5 @@
 # MDP Best Policy
+### The model
 Let's imagine the following MDP modelling a robot with two tasks in a file called "**robot2.pm**":
 
 ``` java
@@ -41,17 +42,20 @@ rewards "travellingCost"
 endrewards
 ```
 
-The reward structure contains the travelling cost between locations. If we would like to reduce the travelling cost, 
+The reward structure contains the travelling cost between locations.
+
+### The best policy
+If we would like to reduce the travelling cost, 
 for this simple example, we can infer that the 'best' way to complete both tasks is to first do
 task 2 at location 1 (action: [r2_0loc0_1], reward: 25) and then task 22 at location 2 (action: [r2_0loc1_2], reward: 10) for a total cost of 35.
 Note: if task 22 is done first, the total travelling cost to "done" would be 25+50=75.
 
 The following cmd command gives us this information:
 ``` java
-prism robot2.pm -pctl "Rmin=?[F done]" -exportadv best-policy -exportstates states
+prism robot2.pm -pctl "Rmin=?[F done]" -exportadv best-policy.tra -exportstates states.sta
 ```
 
-It generates two files: "best-policy" and "states" files. For now, we are interested in the best-policy[^1]. The first column shows the number of states and transitions.
+It generates two files: "best-policy.tra" and "states.sta" files. For now, we are interested in the best-policy[^1]. The first column shows the number of states and transitions.
 From the second row, it shows the sequence of actions[^2] to "Rmin=?[F done]". The first column is the current row; the second, the next row (destination); the third the probability of the transition; and the last column the action label:
 ```java
 9 7
@@ -78,6 +82,19 @@ From this simple exercise we learned that:
 - it may contain parts of the state space that are not actually reachable under that strategy (e.g., rows 5 and 6 are never reached)
 - once we reach a non-existent state, we are done!
 
+### The visualization
+There is another command which helps for visualization purposes. Replace the cmd command for:
+```
+prism robot2.pm -pctl "Rmin=?[F done]" --exportadvmdp best-policy.tra
+```
+In this case we are generating the best policy with **-exportadvmdp**. Then run the next command:
+```
+prism -importtrans best-policy.tra -mdp -exportmodel model.dot
+```
+which generated a ".dot" file which can be visualize as [^3]:
+![image](https://user-images.githubusercontent.com/63869574/140512165-7616b9a3-a60e-44a0-ad6d-35e53d80e9d9.png)
+
+
 
 [^1]: It contains the Markov chain induced by the optimal policy, i.e., the series of deterministic actions that convert the MDP to a DTMC.
 [^2]: https://www.prismmodelchecker.org/manual/Appendices/ExplicitModelFiles#tra. Notice that for some models this may not concide to the number of states and transitions shown when build the PRISM model in the graphical interface. This is because: 
@@ -87,3 +104,4 @@ original model and an automaton. The .tra file you are seeing is a
 fragment of that product, not the original model. Hence the mismatch in
 indexing. There are actually switches -exportprodtrans and
 -exportprodstates with export info about the product model, if that helps." Exchange with D.Parker
+[^3]:This is using https://dreampuf.github.io/GraphvizOnline/

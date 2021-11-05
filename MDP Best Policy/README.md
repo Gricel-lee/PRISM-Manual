@@ -64,12 +64,12 @@ From the second row, it shows the sequence of actions[^2] to "Rmin=?[F done]". T
 7 8 1 t22
 ```
 
-Hence, for our example, this file can be interpretated as the following sequence of states:
+Hence, for our example, this file can be interpretated as:
 ```java
-0 to 1 - 1st travel to location 1, r2_0loc0_1
-1 to 3 - 2nd do task t2
-3 to 7 - 3rd travel to location 2, r2_0loc1_2
-2 to 4 - 4rd do task t2
+0 to 1   - 1st travel to location 1, r2_0loc0_1
+1 to 3   - 2nd do task t2
+3 to 7   - 3rd travel to location 2, r2_0loc1_2
+2 to 4   - 4rd do task t2
 there is no 4, so we are done.
 ```
 

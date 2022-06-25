@@ -7,6 +7,7 @@ I tested running PRISM in three different ways:
 The findings and files used as provided here.
 
 # Results
+Averaging the results over 50 runs:
 ```
 PYTHONCMD   PRISMIDE   PRISMAPI   FORMULA
  -           -         564ms       (to start PRISMAPI)
